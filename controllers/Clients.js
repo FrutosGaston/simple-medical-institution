@@ -1,8 +1,8 @@
 'use strict';
 
-let Clients = require('../models').Clients;
+const Clients = require('../models').Clients;
 
-let ClientsController = {};
+const ClientsController = {};
 
 ClientsController.find = function (req, res, next) {
     const fClients = Clients.find();
@@ -65,16 +65,35 @@ ClientsController.updateOne = function(req, res, next) {
 ClientsController.deleteOne = function (req, res, next) {
     const id = req.params.id;
 
-    Clients.findById(id)
-        .then(function(resp){
-            return Clients.findByIdAndRemove(id), resp;
+    Clients.findByIdAndRemove(id)
+        .then(function(resp) {
+            res.ok(resp);
         })
-        .spread(function(deleted, resp) {
-            if(!resp){
-                next();
-            } else {
-                res.ok(resp);
-            }
+        .catch(function(err){
+            next(err);
+        });
+};
+
+ClientsController.addImmunization = function (req, res, next) {
+    const id = req.params.clientId;
+    const data  = req.body;
+
+    Clients.update({ _id: id }, { $push: { immunizations: data } })
+        .then(function () {
+            res.ok();
+        })
+        .catch(function(err){
+            next(err);
+        });
+};
+
+ClientsController.removeImmunization = function (req, res, next) {
+    const clientId = req.params.clientId;
+    const id = req.params.id;
+
+    Clients.update({ _id: clientId }, { $pull: { immunizations: { _id: id } } })
+        .then(function () {
+            res.ok();
         })
         .catch(function(err){
             next(err);

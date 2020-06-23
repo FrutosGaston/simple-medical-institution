@@ -16,4 +16,8 @@ router.patch('/'+service+'/:id', clientsController.updateOne);
 
 router.delete('/'+service+'/:id', clientsController.deleteOne);
 
+router.post('/'+service+'/:clientId/immunizations', clientsController.addImmunization);
+
+router.delete('/'+service+'/:clientId/immunizations/:id', clientsController.removeImmunization);
+
 module.exports = router;

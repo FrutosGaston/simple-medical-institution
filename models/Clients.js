@@ -1,10 +1,10 @@
 'use strict';
 
-let db = require('../services/database').mongo;
+const db = require('../services/database').mongo;
 
-let collection = 'Clients';
+const collection = 'Clients';
 
-let addressSchema = db._mongoose.Schema({
+const addressSchema = db._mongoose.Schema({
     streetNumber: String,
     street: String,
     city: String,
@@ -12,7 +12,7 @@ let addressSchema = db._mongoose.Schema({
     zip: String
 });
 
-let guardianSchema = db._mongoose.Schema({
+const guardianSchema = db._mongoose.Schema({
     role: String,
     firstName: String,
     lastName: String,
@@ -20,21 +20,23 @@ let guardianSchema = db._mongoose.Schema({
     telephone: String
 });
 
-let allergySchema = db._mongoose.Schema({
+const allergySchema = db._mongoose.Schema({
     name: String,
     reaction: String,
     severity: String
 });
-let immunizationSchema = db._mongoose.Schema({
+
+const immunizationSchema = db._mongoose.Schema({
     date: Date,
     name: String,
     type: String,
     doseQuantity: { value: Number, unit: String },
     instructions: String
 });
-let medication = { type: db._mongoose.Schema.Types.ObjectId, ref: 'medication' };
 
-let schemaObject = {
+const medication = { type: db._mongoose.Schema.Types.ObjectId, ref: 'medication' };
+
+const schemaObject = {
     firstName: String,
     lastName: String,
     gender: String,
@@ -55,7 +57,7 @@ let schemaObject = {
 
 };
 
-let Schema = db._mongoose.Schema(schemaObject);
+const Schema = db._mongoose.Schema(schemaObject);
 
 Schema.statics.search = function(string) {
     return this.find({$text: {$search: string}}, { score : { $meta: 'textScore' } })
@@ -64,7 +66,7 @@ Schema.statics.search = function(string) {
 
 Schema.pre('update', function(next) {
     // Indexing for search
-    let ourDoc = this._update;
+    const ourDoc = this._update;
     ourDoc.model = collection;
     ourDoc.update = true;
 
@@ -73,7 +75,7 @@ Schema.pre('update', function(next) {
     next();
 });
 
-let Model = db.model(collection, Schema);
+const Model = db.model(collection, Schema);
 Model._mongoose = db._mongoose;
 
 module.exports = Model;

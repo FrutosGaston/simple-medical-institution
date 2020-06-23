@@ -5,6 +5,10 @@
   "main": "app.js",
   "author": "Gaston Frutos <frutos.gaston@gmail.com>",
   "license": "GPL-3.0",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha --exit -R min"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
