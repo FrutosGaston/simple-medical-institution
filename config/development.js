@@ -2,7 +2,7 @@
 module.exports = {
     env: process.env.NODE_ENV || 'development',
     port: process.env.PORT || 8080,
-    mongoURL: process.env.MONGOLAB_URL || 'mongodb://127.0.0.1/snipe',
+    mongoURL: process.env.MONGOLAB_URL || 'mongodb://127.0.0.1/smi',
     noFrontendCaching: process.env.NO_CACHE || 'yes',
     frontendCacheExpiry: process.env.FRONTEND_CACHE_EXPIRY || '90',
     backendCacheExpiry: process.env.BACKEND_CACHE_EXPIRY || '90',

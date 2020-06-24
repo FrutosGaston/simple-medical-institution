@@ -1,6 +1,8 @@
 'use strict';
+const { validationResult } = require('express-validator/check');
 
 const initializeController = function (controller, model) {
+
     controller.find = function (req, res, next) {
         const query = {...req.query};
         const {page = 1, limit = 10, sort = '-createdAt'} = query;
@@ -50,6 +52,11 @@ const initializeController = function (controller, model) {
     };
 
     controller.create = function (req, res, next) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.badRequest(errors.array(), 'Validation error.');
+        }
+
         const data = req.body;
 
         model.create(data)

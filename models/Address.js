@@ -3,10 +3,10 @@ const db = require('../services/database').mongo;
 const Address = {};
 
 Address.schema = db._mongoose.Schema({
-    streetNumber: String,
-    street: String,
-    city: String,
-    state: String,
+    streetNumber: { type: String, required: true },
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
     zip: String
 });
 

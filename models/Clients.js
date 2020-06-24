@@ -5,39 +5,41 @@ const addressSchema = require('./Address').schema;
 
 const collection = 'Clients';
 
+const requiredString = { type: String, required: true };
+
 const guardianSchema = db._mongoose.Schema({
-    role: String,
-    firstName: String,
-    lastName: String,
+    role: requiredString,
+    firstName: requiredString,
+    lastName: requiredString,
     address: addressSchema,
-    telephone: String
+    telephone: requiredString
 });
 
 const allergySchema = db._mongoose.Schema({
-    name: String,
-    reaction: String,
-    severity: String
+    name: requiredString,
+    reaction: requiredString,
+    severity: requiredString
 });
 
 const immunizationSchema = db._mongoose.Schema({
-    date: Date,
-    name: String,
+    date: { type: Date, required: true },
+    name: requiredString,
     type: String,
     doseQuantity: { value: Number, unit: String },
     instructions: String
 });
 
 const schemaObject = {
-    firstName: String,
-    lastName: String,
-    gender: String,
+    firstName: requiredString,
+    lastName: requiredString,
+    gender: requiredString,
     martialStatus: String,
     religiousAffiliation: String,
     ethnicity: String,
     languageSpoken: String,
     address: addressSchema,
-    telephone: String,
-    birthday: Date,
+    telephone: requiredString,
+    birthday: { type: Date, required: true },
     guardian: guardianSchema,
     immunizations: [immunizationSchema],
     allergies: [allergySchema],

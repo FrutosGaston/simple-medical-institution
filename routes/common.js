@@ -7,7 +7,7 @@ router.createCRUDResources = function (resourceName, controller) {
 
     router.get('/'+resourceName+'/:id', controller.findOne);
 
-    router.post('/'+resourceName, controller.create);
+    router.post('/'+resourceName, controller.validate(), controller.create);
 
     router.patch('/'+resourceName+'/:id', controller.updateOne);
 

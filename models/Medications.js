@@ -5,13 +5,13 @@ const db = require('../services/database').mongo;
 const collection = 'Medications';
 
 const schemaObject = {
-    name: String,
-    Date: Date,
+    name: { type: String, required: true },
+    date: { type: Date, required: true },
     type: String,
     instructions: String,
     doseQuantity: { value: Number, unit: String },
     rateQuantity: { value: Number, unit: String },
-    client: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Clients' },
+    client: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Clients', required: true },
     prescriber: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Providers' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: Date

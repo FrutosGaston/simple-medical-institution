@@ -82,7 +82,7 @@ describe('Client Model',function(){
         });
 
         it('should add createdAt', function(done){
-            const myclient = Client.create({firstName: 'this is for the gods'});
+            const myclient = Client.create(clientBody);
 
             myclient.then(function(res){
                 res.should.have.property('createdAt');

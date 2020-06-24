@@ -5,11 +5,11 @@ const db = require('../services/database').mongo;
 const collection = 'Encounters';
 
 const schemaObject = {
-    name: String,
-    date: Date,
+    name: { type: String, required: true },
+    date: { type: Date, required: true },
     provider: String,
     location: String,
-    client: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Clients' },
+    client: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Clients', required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: Date
 };

@@ -6,7 +6,7 @@ const addressSchema = require('./Address').schema;
 const collection = 'Providers';
 
 const schemaObject = {
-    name: String,
+    name: { type: String, required: true },
     address: addressSchema,
     telephone: String,
     createdAt: { type: Date, default: Date.now },

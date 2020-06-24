@@ -2,10 +2,22 @@
 
 const Clients = require('../models').Clients;
 const initializeController = require('./initialize');
+const { body } = require('express-validator/check');
 
 const ClientsController = {};
 
 initializeController(ClientsController, Clients);
+
+ClientsController.validate = () => {
+    return [
+        body('firstName', "firstName is required").exists(),
+        body('lastName', "lastName is required").exists(),
+        body('gender', "gender is required").exists(),
+        body('address', "address is required").exists(),
+        body('birthday', "birthday is required").exists(),
+        body('telephone', "telephone is required").exists()
+    ];
+};
 
 ClientsController.addImmunization = function (req, res, next) {
     const id = req.params.clientId;
