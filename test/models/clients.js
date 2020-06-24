@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-env mocha */
 
 var chai = require('chai');
 chai.should();

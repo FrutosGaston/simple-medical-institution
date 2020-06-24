@@ -27,7 +27,7 @@ const immunizationSchema = db._mongoose.Schema({
     instructions: String
 });
 
-const medication = { type: db._mongoose.Schema.Types.ObjectId, ref: 'medication' };
+const medication = { type: db._mongoose.Schema.Types.ObjectId, ref: 'Medications' };
 
 const schemaObject = {
     firstName: String,
@@ -44,18 +44,12 @@ const schemaObject = {
     immunizations: [immunizationSchema],
     allergies: [allergySchema],
     medications: [medication],
-    provider: { type: db._mongoose.Schema.Types.ObjectId, ref: 'provider' },
+    provider: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Providers' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: Date
-
 };
 
 const Schema = db._mongoose.Schema(schemaObject);
-
-Schema.statics.search = function(string) {
-    return this.find({$text: {$search: string}}, { score : { $meta: 'textScore' } })
-        .sort({ score : { $meta : 'textScore' } });
-};
 
 Schema.pre('update', function(next) {
     this._update.updatedAt = new Date(Date.now()).toISOString();
