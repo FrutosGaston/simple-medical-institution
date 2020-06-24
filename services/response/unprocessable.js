@@ -11,9 +11,9 @@ module.exports = function(data, message){
         }
     }
 
-    if(data){
+    if (data) {
         this.status(422).json({status: 'error', data: data, message: message ? message : 'unprocessable entity'});
-    }else{
+    } else {
         this.status(422).json({status: 'error', message: message ? message : 'unprocessable entity'});
     }
 };

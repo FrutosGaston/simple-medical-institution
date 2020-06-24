@@ -1,20 +1,12 @@
 'use strict';
-var express = require('express');
-var router = express.Router();
-var validator = require('../services/validator');
-var clientsController = require('../controllers/Clients');
+const express = require('express');
+const router = express.Router();
+const clientsController = require('../controllers/Clients');
+const commonRouter = require('./common');
 
-var service = 'clients';
+const service = 'clients';
 
-router.get('/'+service, clientsController.find);
-
-router.get('/'+service+'/:id', clientsController.findOne);
-
-router.post('/'+service, clientsController.create);
-
-router.patch('/'+service+'/:id', clientsController.updateOne);
-
-router.delete('/'+service+'/:id', clientsController.deleteOne);
+commonRouter.createCRUDResources(service, clientsController);
 
 router.post('/'+service+'/:clientId/immunizations', clientsController.addImmunization);
 

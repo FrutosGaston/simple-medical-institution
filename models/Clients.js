@@ -1,16 +1,9 @@
 'use strict';
 
 const db = require('../services/database').mongo;
+const addressSchema = require('./Address').schema;
 
 const collection = 'Clients';
-
-const addressSchema = db._mongoose.Schema({
-    streetNumber: String,
-    street: String,
-    city: String,
-    state: String,
-    zip: String
-});
 
 const guardianSchema = db._mongoose.Schema({
     role: String,
@@ -65,13 +58,7 @@ Schema.statics.search = function(string) {
 };
 
 Schema.pre('update', function(next) {
-    // Indexing for search
-    const ourDoc = this._update;
-    ourDoc.model = collection;
-    ourDoc.update = true;
-
-    ourDoc.updatedAt = new Date(Date.now()).toISOString();
-    
+    this._update.updatedAt = new Date(Date.now()).toISOString();
     next();
 });
 

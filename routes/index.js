@@ -24,7 +24,6 @@ const nocache = require('nocache');
 router._loadRoutes = function(routeFiles) {
     var versions = [];
     var ourRoutes = {};
-    // Number of routes, removing index and initialize
     var currentRoute = 0;
     var routeNum = routeFiles.length * 1;
 
@@ -32,7 +31,7 @@ router._loadRoutes = function(routeFiles) {
     routeFiles.forEach(function(file) {
         currentRoute = currentRoute + 1;
         var splitFileName = file.split('.');
-        if(splitFileName[0] !== 'index' && splitFileName[0] !== 'initialize'){
+        if(splitFileName[0] !== 'index'){
 
             if(splitFileName.length === 3){
                 ourRoutes[splitFileName[0]+'.'+splitFileName[1]] = require('./'+splitFileName[0]+'.'+splitFileName[1]);
@@ -73,7 +72,6 @@ router._APICache = function (req, res, next) {
     var cache = new EngineRedis(redisClient);
     var APICache = new Cacheman(me.name, { engine: cache, ttl: config.backendCacheExpiry });
     req.cache = APICache;
-    // Tell Frontend to Cache responses
     res.set({'Cache-Control':'private, max-age='+config.frontendCacheExpiry+''});
 
     var key = [];
@@ -81,14 +79,12 @@ router._APICache = function (req, res, next) {
     key.push(req.ip);
     key.push(req.get('user-agent'));
     req.cacheKey = key;
-    // Remember to delete cache when you get a POST call
-    // Only cache GET calls
+
     if(req.method === 'GET'){
     //  if record is not in cache, set cache else get cache
         req.cache.get(req.cacheKey)
             .then(function(resp){
                 if (!resp) {
-                    // Will be set on successful response
                     next();
                 } else {
                     res.ok(resp, true);
@@ -99,14 +95,18 @@ router._APICache = function (req, res, next) {
                 // Don't block the call because of this failure.
                 next();
             });
-    }else{
-        if(req.method === 'POST' || req.method === 'PUT' || req.method === 'PUSH' || req.method === 'PATCH' || req.method === 'DELETE'){
+    } else {
+        if (req.method === 'POST' ||
+            req.method === 'PUT' ||
+            req.method === 'PUSH' ||
+            req.method === 'PATCH' ||
+            req.method === 'DELETE') {
             req.cache.del(req.cacheKey)
                 .then(function(res){})
                 .catch(function(err){
                     log.error('Failed to delete cached data: ', err);
                     // Don't block the call because of this failure.
-                }); // No delays
+                });
         }
         next();
     }
@@ -172,22 +172,10 @@ router.get('/', function (req, res) {
     res.ok({name: me.name, version: me.version});
 });
 
-// Let's Encrypt Setup
-router.get(config.letsencryptSSLVerificationURL, function(req,res){
-    res.send(config.letsencryptSSLVerificationBody);
-});
-
-// Publicly available routes here, IE. routes that should work with out requiring userid, appid and developer.
-
-// Should automatically load routes
-// Other routes here
-
 var normalizedPath = require('path').join(__dirname, './');
 var routeFiles = fileSystem.readdirSync(normalizedPath);
 
 router._loadRoutes(routeFiles);
-
-// Finished loading routes
 
 router.use(function(req, res, next) { // jshint ignore:line
     res.notFound();
