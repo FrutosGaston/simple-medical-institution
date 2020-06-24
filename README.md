@@ -1,1 +1,1 @@
-https://travis-ci.org/FrutosGaston/simple-medical-institution.svg?branch=master
+![travis build badge](https://travis-ci.org/FrutosGaston/simple-medical-institution.svg?branch=master)

@@ -7,7 +7,8 @@
   "license": "GPL-3.0",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "lint": "./node_modules/.bin/eslint . ./**/*.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",
