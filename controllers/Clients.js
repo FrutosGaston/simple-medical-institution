@@ -5,11 +5,30 @@ const Clients = require('../models').Clients;
 const ClientsController = {};
 
 ClientsController.find = function (req, res, next) {
-    const fClients = Clients.find();
+    const query = { ...req.query };
+    const { page = 1, limit = 10, sort = '-createdAt' } = query;
+
+    const excludedFields = ['page', 'limit', 'sort'];
+    excludedFields.forEach(el => delete query[el]);
+
+    const sortBy = sort.split(',').join(' ');
+
+    let queryStr = JSON.stringify(query);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|eq|ne)\b/g, match => `$${match}`);
+
+    const fClients = Clients
+        .find(JSON.parse(queryStr))
+        .sort(sortBy)
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
 
     fClients
         .then(function(clients) {
-            res.ok(clients);
+            if (!clients) {
+                next();
+            } else {
+                res.ok({ clients: clients, currentPage: page });
+            }
         })
         .catch(function(err){
             next(err);
