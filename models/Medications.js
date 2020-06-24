@@ -11,6 +11,7 @@ const schemaObject = {
     instructions: String,
     doseQuantity: { value: Number, unit: String },
     rateQuantity: { value: Number, unit: String },
+    client: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Clients' },
     prescriber: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Providers' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: Date

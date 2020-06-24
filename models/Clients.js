@@ -27,8 +27,6 @@ const immunizationSchema = db._mongoose.Schema({
     instructions: String
 });
 
-const medication = { type: db._mongoose.Schema.Types.ObjectId, ref: 'Medications' };
-
 const schemaObject = {
     firstName: String,
     lastName: String,
@@ -43,7 +41,6 @@ const schemaObject = {
     guardian: guardianSchema,
     immunizations: [immunizationSchema],
     allergies: [allergySchema],
-    medications: [medication],
     provider: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Providers' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: Date
