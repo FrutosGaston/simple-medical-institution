@@ -11,19 +11,41 @@ var Client = require('../../models/Clients');
 
 describe('Client Model',function(){
 
-    var client;
+    const clientBody = {
+        firstName: "Ellen",
+        lastName: "Ross",
+        gender: "Female",
+        martialStatus: "Married",
+        religiousAffiliation: "Christian",
+        ethnicity: "Asian",
+        languageSpoken: "English",
+        address: {"streetNumber": "17", "street": "Daws Road", "city": "Portland", "state": "OR", "zip": "97006"},
+        telephone: "415-555-1229",
+        birthday: "March 7, 1960",
+        guardian: {
+            role: "Sister",
+            firstName: "Martha",
+            lastName: "Shan",
+            address: {"streetNumber": "17", "street": "Daws Road", "city": "Portland", "state": "OR", "zip": "97006"},
+            telephone: "816-276-6909"
+        },
+        immunizations: [],
+        allergies: [],
+        provider: "5ef3bb60d4111b4b27f8bf83"
+    };
 
+    let client;
     beforeEach((done) => {
-        client = new Client({  firstName: 'Ellen' });
+        client = new Client(clientBody);
         client.save().then(() => done());
     });
 
     describe('Test CRUDS', function() {
         it('should save data', function(done){
-            var myclient = Client.create({firstName: 'femi'});
+            var myclient = Client.create(clientBody);
 
             myclient.then(function(res){
-                res.should.be.an.object; /* jslint ignore:line */
+                res.firstName.should.be.eql(clientBody.firstName);
                 done();
             })
                 .catch(function(err){
@@ -32,22 +54,10 @@ describe('Client Model',function(){
         });
 
         it('should read data', function(done){
-            var myclient = Client.findOne({_id: client._id});
+            var myclient = Client.findOne({_id: client.id});
 
             myclient.then(function (res) {
-                res.should.be.an.object; /* jslint ignore:line */
-                done();
-            })
-                .catch(function(err){
-                    done(err);
-                });
-        });
-
-        it('should read all data', function(done){
-            var myclient = Client.find();
-
-            myclient.then(function(res){
-                res.should.be.an.array; /* jslint ignore:line */
+                res.firstName.should.be.eql(client.firstName);
                 done();
             })
                 .catch(function(err){
@@ -94,18 +104,6 @@ describe('Client Model',function(){
                     res.should.have.property('updatedAt');
                     done();
                 })
-                .catch(function(err){
-                    done(err);
-                });
-        });
-
-        it ('should count returned records', function(done) {
-            var myclient = Client.estimatedDocumentCount({firstName: 'This is the titan'});
-
-            myclient.then(function(res){
-                res.should.be.a.number; /* jslint ignore:line */
-                done();
-            })
                 .catch(function(err){
                     done(err);
                 });
