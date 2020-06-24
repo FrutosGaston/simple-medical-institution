@@ -15,13 +15,8 @@ node_js:
   - '12'
 before_script:
   - sleep 15
-  - npm install -g mocha codecov istanbul
+  - npm install -g mocha
 install:
   - npm install
-  - npm test
-  - npm start >> femi.log . &
 script:
-  - sleep 15
-  - >-
-    istanbul cover ./node_modules/mocha/bin/_mocha --exit --report lcovonly -- -R spec
-    && codecov
+  - npm test

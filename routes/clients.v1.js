@@ -20,4 +20,8 @@ router.post('/'+service+'/:clientId/immunizations', clientsController.addImmuniz
 
 router.delete('/'+service+'/:clientId/immunizations/:id', clientsController.removeImmunization);
 
+router.post('/'+service+'/:clientId/allergies', clientsController.addAllergy);
+
+router.delete('/'+service+'/:clientId/allergies/:id', clientsController.removeAllergy);
+
 module.exports = router;

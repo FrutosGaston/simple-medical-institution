@@ -100,4 +100,30 @@ ClientsController.removeImmunization = function (req, res, next) {
         });
 };
 
+ClientsController.addAllergy = function (req, res, next) {
+    const id = req.params.clientId;
+    const data  = req.body;
+
+    Clients.update({ _id: id }, { $push: { allergies: data } })
+        .then(function () {
+            res.ok();
+        })
+        .catch(function(err){
+            next(err);
+        });
+};
+
+ClientsController.removeAllergy = function (req, res, next) {
+    const clientId = req.params.clientId;
+    const id = req.params.id;
+
+    Clients.update({ _id: clientId }, { $pull: { allergies: { _id: id } } })
+        .then(function () {
+            res.ok();
+        })
+        .catch(function(err){
+            next(err);
+        });
+};
+
 module.exports = ClientsController;
