@@ -21,9 +21,9 @@ PlansOfCareController.findOne = function (req, res, next) {
     const fClient = PlansOfCare.findById(id);
 
     fClient
-        .then(function(client) {
-            if (client) {
-                res.ok(client);
+        .then(function(plan) {
+            if (plan) {
+                res.ok(plan);
             } else {
                 next();
             }

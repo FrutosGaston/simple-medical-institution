@@ -1,29 +1,29 @@
 'use strict';
 
-const Medications = require('../models').Medications;
+const Encounters = require('../models').Encounters;
 
-const MedicationsController = {};
+const EncountersController = {};
 
-MedicationsController.find = function (req, res, next) {
-    const fMedications = Medications.find();
+EncountersController.find = function (req, res, next) {
+    const fEncounters = Encounters.find();
 
-    fMedications
-        .then(function(medications) {
-            res.ok(medications);
+    fEncounters
+        .then(function(encounters) {
+            res.ok(encounters);
         })
         .catch(function(err){
             next(err);
         });
 };
 
-MedicationsController.findOne = function (req, res, next) {
+EncountersController.findOne = function (req, res, next) {
     const id = req.params.id;
-    const fClient = Medications.findById(id);
+    const fClient = Encounters.findById(id);
 
     fClient
-        .then(function(medication) {
-            if (medication) {
-                res.ok(medication);
+        .then(function(encounter) {
+            if (encounter) {
+                res.ok(encounter);
             } else {
                 next();
             }
@@ -33,10 +33,10 @@ MedicationsController.findOne = function (req, res, next) {
         });
 };
 
-MedicationsController.create = function (req, res, next) {
+EncountersController.create = function (req, res, next) {
     const data = req.body;
 
-    Medications.create(data)
+    Encounters.create(data)
         .then(function(resp) {
             res.ok(resp);
         })
@@ -45,11 +45,11 @@ MedicationsController.create = function (req, res, next) {
         });
 };
 
-MedicationsController.updateOne = function(req, res, next) {
+EncountersController.updateOne = function(req, res, next) {
     const id = req.params.id;
     const data  = req.body;
     
-    Medications.findByIdAndUpdate(id, data)
+    Encounters.findByIdAndUpdate(id, data)
         .then(function(resp){
             if (!resp) {
                 next();
@@ -62,10 +62,10 @@ MedicationsController.updateOne = function(req, res, next) {
         });
 };
 
-MedicationsController.deleteOne = function (req, res, next) {
+EncountersController.deleteOne = function (req, res, next) {
     const id = req.params.id;
 
-    Medications.findByIdAndRemove(id)
+    Encounters.findByIdAndRemove(id)
         .then(function(resp) {
             res.ok(resp);
         })
@@ -74,4 +74,4 @@ MedicationsController.deleteOne = function (req, res, next) {
         });
 };
 
-module.exports = MedicationsController;
+module.exports = EncountersController;

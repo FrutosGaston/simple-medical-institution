@@ -21,9 +21,9 @@ ProvidersController.findOne = function (req, res, next) {
     const fClient = Providers.findById(id);
 
     fClient
-        .then(function(client) {
-            if (client) {
-                res.ok(client);
+        .then(function(provider) {
+            if (provider) {
+                res.ok(provider);
             } else {
                 next();
             }
