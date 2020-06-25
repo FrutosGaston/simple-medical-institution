@@ -16,7 +16,7 @@ const schemaObject = {
 
 const Schema = db._mongoose.Schema(schemaObject);
 
-Schema.pre('update', function(next) {
+Schema.pre('update', function (next) {
     this._update.updatedAt = new Date(Date.now()).toISOString();
     next();
 });

@@ -7,7 +7,7 @@ var client = redis.createClient(config.redisURL);
 
 client.on('error', log.error);
 
-client.on('connect', function() {
+client.on('connect', function () {
     log.info('Redis database connection successful');
 });
 

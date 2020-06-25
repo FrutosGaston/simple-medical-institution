@@ -2,30 +2,30 @@
 var log = require('../logger');
 var _ = require('lodash');
 
-module.exports = function(data, message){
+module.exports = function (data, message) {
     log.error('sending server error response: ', data, message || 'server error');
 
     var req = this.req;
     var res = this;
 
-    var response = {response: {status: 'error', data: data, message: message ? message : 'server error'}};
+    var response = { response: { status: 'error', data: data, message: message || 'server error' } };
     response.requestId = req.requestId;
 
     if (data !== undefined && data !== null) {
-        if(Object.keys(data).length === 0 && JSON.stringify(data) === JSON.stringify({})){
+        if (Object.keys(data).length === 0 && JSON.stringify(data) === JSON.stringify({})) {
             data = data.toString();
         }
     }
     var statusCode;
-    if(data.statusCode){
+    if (data.statusCode) {
         statusCode = data.statusCode;
-    }else{
+    } else {
         statusCode = 500;
     }
 
-    if(data){
-        this.status(statusCode).json({status: 'error', data: data, message: message ? message : 'server error'});
-    }else{
-        this.status(statusCode).json({status: 'error', message: message ? message : 'server error'});
+    if (data) {
+        this.status(statusCode).json({ status: 'error', data: data, message: message || 'server error' });
+    } else {
+        this.status(statusCode).json({ status: 'error', message: message || 'server error' });
     }
 };

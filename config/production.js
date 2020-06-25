@@ -10,5 +10,5 @@ module.exports = {
     rateLimitExpiry: process.env.RATE_LIMIT_EXPIRY || '3600000',
     redisURL: process.env.REDIS_URL || 'redis://192.168.99.100:6379/1',
     maxContentLength: process.env.MAX_CONTENT_LENGTH || '9999',
-    enforceSSL: process.env.ENFORCE_SSL || 'no',
+    enforceSSL: process.env.ENFORCE_SSL || 'no'
 };

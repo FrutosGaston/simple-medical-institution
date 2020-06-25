@@ -2,10 +2,9 @@
 const { validationResult } = require('express-validator/check');
 
 const initializeController = function (controller, model) {
-
     controller.find = function (req, res, next) {
-        const query = {...req.query};
-        const {page = 1, limit = 10, sort = '-createdAt'} = query;
+        const query = { ...req.query };
+        const { page = 1, limit = 10, sort = '-createdAt' } = query;
 
         const excludedFields = ['page', 'limit', 'sort'];
         excludedFields.forEach(el => delete query[el]);
@@ -26,7 +25,7 @@ const initializeController = function (controller, model) {
                 if (!resp) {
                     next();
                 } else {
-                    res.ok({resp: resp, currentPage: page});
+                    res.ok({ resp: resp, currentPage: page });
                 }
             })
             .catch(function (err) {
