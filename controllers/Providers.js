@@ -10,7 +10,7 @@ initializeController(ProvidersController, Providers);
 
 ProvidersController.validate = () => {
     return [
-        body('name', "name is required").exists()
+        body('name', 'name is required').exists()
     ];
 };
 

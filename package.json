@@ -15,15 +15,14 @@
     "chai-as-promised": "^6.0.0",
     "conventional-github-releaser": "^1.1.12",
     "fs": "0.0.1-security",
-    "jshint": "^2.11.0",
-    "jshint-stylish": "^2.2.1",
     "minimist": "^1.2.5",
     "mocha": "^7.1.2",
     "mongoose-mock": "^0.4.0",
     "run-sequence": "^2.2.1",
     "sinon": "^2.3.4",
     "sinon-chai": "^2.11.0",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "eslint": "^7.3.1"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -31,7 +30,6 @@
     "cacheman-redis": "^1.1.2",
     "cluster": "^0.7.7",
     "cors": "^2.8.3",
-    "crypto": "0.0.3",
     "debug": "^2.6.3",
     "express": "^4.15.2",
     "express-content-length-validator": "^1.0.0",

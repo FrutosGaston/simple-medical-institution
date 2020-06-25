@@ -6,7 +6,7 @@ const collection = 'PlansOfCare';
 
 const schemaObject = {
     name: { type: String, required: true },
-    Date: { type: Date, required: true },
+    date: { type: Date, required: true },
     instructions: String,
     client: { type: db._mongoose.Schema.Types.ObjectId, ref: 'Clients', required: true },
     createdAt: { type: Date, default: Date.now },
@@ -15,7 +15,7 @@ const schemaObject = {
 
 const Schema = db._mongoose.Schema(schemaObject);
 
-Schema.pre('update', function(next) {
+Schema.pre('update', function (next) {
     this._update.updatedAt = new Date(Date.now()).toISOString();
     next();
 });

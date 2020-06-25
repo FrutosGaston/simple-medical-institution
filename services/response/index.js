@@ -1,7 +1,7 @@
 'use strict';
 var _ = require('lodash');
 
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
     var responseTypes = {
         ok: require('./ok'),
         badRequest: require('./badRequest'),

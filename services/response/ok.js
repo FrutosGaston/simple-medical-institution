@@ -16,22 +16,21 @@ module.exports = function (data, cache, extraData) {
     } else {
         response.response = { status: 'success', data: data };
     }
-    
+
     response.requestId = req.requestId;
     log.info('Sending ok response: ', response.response);
     if (data) {
         // Only cache GET calls
         if (req.method === 'GET' && config.noFrontendCaching !== 'yes') {
-
             // If this is a cached response, show response else cache the response and show response.
-            if(cache){
+            if (cache) {
                 res.status(200).json(response.response);
             } else {
                 req.cache.set(req.cacheKey, response.response)
-                    .then(function(resp){
+                    .then(function (resp) {
                         res.status(200).json(response.response);
                     })
-                    .catch(function(err){
+                    .catch(function (err) {
                         log.error('Failed to cache data: ', err);
                         res.status(200).json(response.response);
                     });
@@ -42,5 +41,4 @@ module.exports = function (data, cache, extraData) {
     } else {
         res.status(200).json(response.response);
     }
-
 };

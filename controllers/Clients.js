@@ -10,24 +10,24 @@ initializeController(ClientsController, Clients);
 
 ClientsController.validate = () => {
     return [
-        body('firstName', "firstName is required").exists(),
-        body('lastName', "lastName is required").exists(),
-        body('gender', "gender is required").exists(),
-        body('address', "address is required").exists(),
-        body('birthday', "birthday is required").exists(),
-        body('telephone', "telephone is required").exists()
+        body('firstName', 'firstName is required').exists(),
+        body('lastName', 'lastName is required').exists(),
+        body('gender', 'gender is required').exists(),
+        body('address', 'address is required').exists(),
+        body('birthday', 'birthday is required').exists(),
+        body('telephone', 'telephone is required').exists()
     ];
 };
 
 ClientsController.addImmunization = function (req, res, next) {
     const id = req.params.clientId;
-    const data  = req.body;
+    const data = req.body;
 
     Clients.update({ _id: id }, { $push: { immunizations: data } })
         .then(function () {
             res.ok();
         })
-        .catch(function(err){
+        .catch(function (err) {
             next(err);
         });
 };
@@ -40,20 +40,20 @@ ClientsController.removeImmunization = function (req, res, next) {
         .then(function () {
             res.ok();
         })
-        .catch(function(err){
+        .catch(function (err) {
             next(err);
         });
 };
 
 ClientsController.addAllergy = function (req, res, next) {
     const id = req.params.clientId;
-    const data  = req.body;
+    const data = req.body;
 
     Clients.update({ _id: id }, { $push: { allergies: data } })
         .then(function () {
             res.ok();
         })
-        .catch(function(err){
+        .catch(function (err) {
             next(err);
         });
 };
@@ -66,7 +66,7 @@ ClientsController.removeAllergy = function (req, res, next) {
         .then(function () {
             res.ok();
         })
-        .catch(function(err){
+        .catch(function (err) {
             next(err);
         });
 };

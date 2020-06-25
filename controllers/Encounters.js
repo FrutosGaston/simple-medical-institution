@@ -10,9 +10,9 @@ initializeController(EncountersController, Encounters);
 
 EncountersController.validate = () => {
     return [
-        body('name', "name is required").exists(),
-        body('date', "date is required").exists(),
-        body('client', "client is required").exists()
+        body('name', 'name is required').exists(),
+        body('date', 'date is required').exists(),
+        body('client', 'client is required').exists()
     ];
 };
 

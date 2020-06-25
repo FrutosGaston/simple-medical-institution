@@ -8,6 +8,7 @@ var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var router = require('../../routes');
 var express = require('express');
+const apiCache = require('../../routes/cache');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 chai.use(sinonChai);
@@ -19,7 +20,7 @@ var res = {};
 var req = {};
 
 var nextChecker = false;
-var next = function(){
+var next = function () {
     if (arguments.length > 0) {
         console.log(arguments[0]);
     } else {
@@ -30,20 +31,21 @@ var next = function(){
 
 var header = {};
 
-req.get = function(key){
+req.get = function (key) {
     return header[key];
 };
 
-describe('Cache Test', function(){
-    it('should initialize the API cache', function(done){
+describe('Cache Test', function () {
+    it('should initialize the API cache', function (done) {
         res.set = sinon.spy();
-        router._APICache(req, res, next);
-        nextChecker.should.be.true; /* jslint ignore:line */
+        req.url = '';
+        apiCache(req, res, next);
+        nextChecker.should.be.true;
         nextChecker = false;
         req.cache.should.be.a('object');
         req.cacheKey.should.be.a('array');
-        res.set.should.be.called.once; /* jslint ignore:line */
-        res.set.should.be.calledWith({'Cache-Control':'private, max-age='+config.frontendCacheExpiry+''});
+        res.set.should.be.called.once;
+        res.set.should.be.calledWith({ 'Cache-Control': 'private, max-age=' + config.frontendCacheExpiry + '' });
         done();
     });
 });
