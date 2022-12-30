@@ -16,7 +16,7 @@
     "conventional-github-releaser": "^1.1.12",
     "fs": "0.0.1-security",
     "minimist": "^1.2.5",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "mongoose-mock": "^0.4.0",
     "run-sequence": "^2.2.1",
     "sinon": "^2.3.4",
